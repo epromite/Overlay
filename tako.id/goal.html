@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body{
+            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            font-family: "Poppins", sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .liquid-container{
+            height: 300px;
+            width: 200px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 30px 25px 65px 25px;
+        }
+
+        .coin-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://github.com/epromite/Overlay/blob/main/trakteer.id/img/ICON-COIN.PNG?raw=true') no-repeat center center;
+            background-size: contain;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .main-liquid{
+            width: 140px;
+            height: calc(15px + ({{currentAmount}} / {{targetAmount}} * 144px));
+            background: linear-gradient(0deg, #ebb317, #F3C623);
+            border-radius: 70px 70px 0 0;
+            transition: height 2s ease-in-out;
+            animation: liquidWave 3s ease-in-out infinite;
+            max-height: 220px;
+            margin-bottom: 0px;
+            z-index: 1;
+            position: relative;
+        }
+
+        @keyframes liquidWave {
+            0%, 100% { 
+                border-radius: 70px 70px 0 0;
+                transform: scaleX(1);
+            }
+            50% { 
+                border-radius: 60px 80px 0 0;
+                transform: scaleX(1.05);
+            }
+        }
+
+        @keyframes donationPulse {
+            0%, 100% { 
+                height: var(--liquid-height);
+                box-shadow: 0 0 10px rgba(235, 179, 23, 0.6);
+            }
+            50% { 
+                height: calc(var(--liquid-height) + 20px);
+                box-shadow: 0 0 20px rgba(235, 179, 23, 1);
+            }
+        }
+
+        @keyframes celebrate {
+            0%, 100% { 
+                background: linear-gradient(0deg, #ebb317, #F3C623, #ff6b35, #f7931e);
+                box-shadow: 0 0 20px rgba(235, 179, 23, 1);
+                transform: scaleX(1);
+            }
+            50% { 
+                background: linear-gradient(0deg, #ff6b35, #F3C623, #ebb317, #f7931e);
+                box-shadow: 0 0 30px rgba(255, 215, 0, 1);
+                transform: scaleX(1.1);
+            }
+        }
+        .celebrate .main-liquid {
+            animation: liquidWave 3s ease-in-out infinite, celebrate 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="liquid-container">
+            <div class="main-liquid"></div>
+            <div class="coin-image"></div>
+        </div>
+    </div>
+</body>
+</html>
