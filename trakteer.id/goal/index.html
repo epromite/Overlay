@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trakteer Progress</title>
+  <style>
+  .main-liquid{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    rotate: 180deg;
+    margin-top: 60px;
+    top: 87%;
+    right: 7%;
+    border-radius: 50%;
+    animation: rise 5s ease-in-out forwards;
+  }
+
+  @keyframes rise {
+      0% {
+        transform: translateY(0%);
+      }
+      100% {
+        transform: translateY({target_progress}); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="https://github.com/epromite/Overlay/blob/main/img/ICON-COIN.PNG?raw=true" alt="coin" class="borderBody" />
+  <div class="box">
+    <div class="main-liquid">
+      <div class="layer2">
+        <div class="layer1">
+          <div class="wave-layer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
