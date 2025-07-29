@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap"
+      rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        background: none;
+        font-family: "Funnel Display", sans-serif;
+        overflow: visible;
+      }
+
+      .milestone-wrapper {
+        display: inline-block;
+        padding: 0 10px 10px 0;
+      }
+
+      .milestone-card {
+        background: linear-gradient(145deg, #fdd6f0, #f4bff9, #eab8fc, #d6a5f8);
+        border-radius: 16px;
+        box-shadow: 8px 8px 0 #b36ae2;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        width: fit-content;
+        transition: transform 0.3s ease;
+        animation: infinite;
+      }
+
+      .milestone-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .milestone-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        color: white;
+        margin-bottom: 12px;
+        text-align: left;
+        text-shadow: 0 10px 10px rgba(255, 0, 255, 0.3);
+      }
+
+      .milestone-progress {
+        height: 16px;
+        border-radius: 8px;
+        background: #f7e8fd; /* pastel ungu muda */
+        margin-bottom: 12px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 3px rgba(186, 115, 240, 0.25); /* ungu muda */
+      }
+
+      .milestone-progress-bar {
+        background: linear-gradient(90deg, #c86dd7, #f4bff9); /* ungu ke pink pastel */
+        height: 100%;
+        border-radius: 8px;
+        transition: width 0.6s ease;
+        box-shadow: 0 0 12px rgba(200, 100, 240, 0.3); /* efek glow lembut */
+      }
+
+      .milestone-progress-bar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+        animation: shimmer 2s infinite reverse;
+      }
+
+      .milestone-amounts {
+        display: flex;
+        align-items: end;
+        justify-content: end;
+        gap: 10px;
+        letter-spacing: 0.1em;
+        font-size: 1em;
+        color: white;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(255, 0, 255, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- title
+currentAmount
+formattedCurrentAmount
+targetAmount
+formattedTargetAmount
+startAt
+startTime -->
+
+    <div class="milestone-wrapper">
+      <div
+        class="milestone-card"
+        data-current="{{currentAmount}}"
+        data-target="{{targetAmount}}"
+        style="position: relative; overflow: hidden">
+        <div class="milestone-title">{{title}}</div>
+        <div class="milestone-progress">
+          <div id="progress-bar" class="milestone-progress-bar"></div>
+        </div>
+        <div class="milestone-amounts">
+          <div id="amount"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        const card = document.querySelector(".milestone-card");
+        const current = parseFloat(card.dataset.current);
+        const target = parseFloat(card.dataset.target);
+        let percent = 0;
+
+        if (target > 0 && current >= 0) {
+          percent = Math.min(100, Math.round((current / target) * 100));
+        }
+
+        const bar = document.getElementById("progress-bar");
+        if (bar) bar.style.width = percent + "%";
+
+        const amount = document.getElementById("amount");
+
+        const formatIDR = (num) => {
+          return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0,
+            useGrouping: true
+          }).format(num);
+        };
+
+        amount.innerText = formatIDR(current);
+      })();
+    </script>
+  </body>
+</html>

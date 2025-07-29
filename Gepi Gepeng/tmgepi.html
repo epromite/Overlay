@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        background: none;
+        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+      }
+
+      .timer-card {
+        background: linear-gradient(145deg, #e8f5e8, #f1f8e9);
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 12px 48px rgba(76, 175, 80, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.8);
+        transform-style: preserve-3d;
+        will-change: transform;
+        transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+        width: fit-content;
+        padding: 16px 20px 14px 20px;
+      }
+
+      .timer-title {
+        font-size: 2em;
+        font-weight: 600;
+        color: #2e7d32;
+        text-align: center;
+        text-shadow: 0 3px 6px rgba(46, 125, 50, 0.3);
+      }
+
+      .timer-display-true {
+        font-size: 2.5em;
+        font-weight: 700;
+        color: #2e7d32;
+        text-align: center;
+        text-shadow: 0 6px 12px rgba(46, 125, 50, 0.4);
+        font-family: "Courier New", monospace;
+        transition: all 0.3s ease;
+      }
+
+      .timer-display-false {
+        font-size: 2.5em;
+        font-weight: 700;
+        color: #2e7d32;
+        text-align: center;
+        text-shadow: 0 6px 12px rgba(46, 125, 50, 0.4);
+        font-family: "Courier New", monospace;
+        transition: all 0.3s ease;
+        animation: pulse 3s infinite;
+      }
+
+      .timer-display.warning {
+        color: #f57c00;
+        animation: pulse 1s infinite;
+      }
+
+      .timer-display.danger {
+        color: #d32f2f;
+        animation: pulse 0.5s infinite;
+      }
+
+      .timer-paused-true {
+        display: none;
+      }
+
+      .timer-paused-false {
+        font-size: 1.4em;
+        font-weight: 600;
+        color: #f57c00;
+        text-align: center;
+        text-shadow: 0 3px 6px rgba(245, 124, 0, 0.3);
+        font-family: "Segoe UI", sans-serif;
+        animation: pulse 3s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .timer-status {
+        font-size: 0.9em;
+        color: #558b2f;
+        text-align: center;
+        margin-top: 10px;
+        text-shadow: 0 1px 3px rgba(46, 125, 50, 0.15);
+        font-weight: 500;
+      }
+
+      .timer-status.running {
+        color: #2e7d32;
+        font-weight: 600;
+      }
+
+      .timer-status.paused {
+        color: #f57c00;
+        font-weight: 600;
+      }
+
+      .timer-status.finished {
+        color: #d32f2f;
+        font-weight: 600;
+        animation: pulse 1s infinite;
+      }
+
+      .wrap-card {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap-card">
+      <div
+        class="timer-card"
+        data-time-left="{{timeLeft}}"
+        style="position: relative; overflow: hidden">
+        <div class="timer-title" id="timer-title">{{title}}</div>
+        <div class="timer-display-{{isEnabled}}" id="timer-display">{{timeLeft}}</div>
+        <div class="timer-paused-{{isEnabled}}" id="timer-paused">Time Paused</div>
+      </div>
+    </div>
+    <script>
+      const card = document.querySelector(".timer-card");
+      const timeLeft = card.dataset.timeLeft;
+      const timerC = document.getElementById("timerC");
+      const timerDisplay = document.getElementById("timer-display");
+
+      const [minutes, seconds] = timeLeft.split(":").map(Number);
+      const totalSeconds = minutes * 60 + seconds;
+
+      if (timerDisplay) {
+        timerDisplay.classList.remove("warning", "danger");
+
+        if (totalSeconds <= 60) {
+          timerDisplay.classList.add("danger");
+        } else if (totalSeconds <= 300) {
+          timerDisplay.classList.add("warning");
+        }
+      }
+    </script>
+  </body>
+</html>

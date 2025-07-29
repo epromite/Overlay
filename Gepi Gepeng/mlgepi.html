@@ -1,0 +1,196 @@
+<html>
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        background: none;
+        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+        padding: 20px;
+      }
+
+      .milestone-card {
+        background: linear-gradient(145deg, #e8f5e8, #f1f8e9);
+        border: none;
+        border-radius: 16px;
+        box-shadow: 8px 8px 0 #6cb16c;
+        transform-style: preserve-3d;
+        will-change: transform;
+        transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+        width: 100%;
+        padding: 16px 20px 14px 20px;
+      }
+
+      .leaf {
+        position: absolute;
+        color: rgba(129, 199, 132, 0.7);
+        font-size: 1.5em;
+        animation: leafFloat 12s linear infinite;
+        transform-style: preserve-3d;
+        will-change: transform, opacity;
+        pointer-events: none;
+      }
+      .leaf:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+        transform: translateZ(50px);
+      }
+      .leaf:nth-child(2) {
+        left: 25%;
+        animation-delay: 3s;
+        transform: translateZ(20px);
+      }
+      .leaf:nth-child(3) {
+        left: 45%;
+        animation-delay: 6s;
+        transform: translateZ(70px);
+      }
+      .leaf:nth-child(4) {
+        left: 65%;
+        animation-delay: 9s;
+        transform: translateZ(30px);
+      }
+      .leaf:nth-child(5) {
+        left: 85%;
+        animation-delay: 1.5s;
+        transform: translateZ(80px);
+      }
+      .leaf:nth-child(6) {
+        left: 75%;
+        animation-delay: 4.5s;
+        transform: translateZ(10px);
+      }
+      .leaf:nth-child(7) {
+        left: 35%;
+        animation-delay: 7.5s;
+        transform: translateZ(60px);
+      }
+
+      @keyframes leafFloat {
+        0% {
+          transform: translateY(-50px) rotate(0deg) rotateY(0deg) translateZ(var(--z-start, 0px));
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg) rotateY(180deg) translateZ(var(--z-end, 0px));
+          opacity: 0;
+        }
+      }
+
+      .nature-icon {
+        color: #4caf50;
+        font-size: 2.5em;
+        transform: translateZ(20px);
+        animation: iconGrow 6s ease-in-out infinite;
+        text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        will-change: transform;
+        pointer-events: none;
+      }
+
+      @keyframes iconGrow {
+        0% {
+          transform: translateZ(20px) scale(1) rotateY(0deg);
+        }
+        50% {
+          transform: translateZ(30px) scale(1.1) rotateY(180deg);
+        }
+        100% {
+          transform: translateZ(20px) scale(1) rotateY(360deg);
+        }
+      }
+      .milestone-title {
+        font-size: 1.1em;
+        font-weight: 600;
+        color: #2e7d32;
+        margin-bottom: 8px;
+        text-align: center;
+        text-shadow: 0 3px 6px rgba(46, 125, 50, 0.3);
+      }
+      .milestone-progress {
+        height: 12px;
+        border-radius: 8px;
+        background: #e8f5e8;
+        margin-bottom: 8px;
+        overflow: hidden;
+        box-shadow: 0 6px 24px rgba(76, 175, 80, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+      .milestone-progress-bar {
+        background: linear-gradient(90deg, #4caf50, #66bb6a);
+        height: 100%;
+        border-radius: 8px;
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 32px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+      .milestone-amounts {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.95em;
+        margin-bottom: 6px;
+        color: #305a32;
+        font-weight: 700;
+        text-shadow: 0 3px 6px rgba(46, 125, 50, 0.2);
+      }
+      .milestone-meta {
+        font-size: 0.9em;
+        color: #558b2f;
+        text-align: center;
+        margin-top: 6px;
+        text-shadow: 0 1px 3px rgba(46, 125, 50, 0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="milestone-card"
+      data-current="{{currentAmount}}"
+      data-target="{{targetAmount}}"
+      style="position: relative; overflow: hidden">
+      <!-- Ornamen daun di dalam card -->
+      <div class="leaf">🍃</div>
+      <div class="leaf">🌿</div>
+      <div class="leaf">🍃</div>
+      <div class="leaf">🌿</div>
+      <div class="leaf">🍃</div>
+      <div class="leaf">🌿</div>
+      <div class="leaf">🍃</div>
+      <div class="milestone-title fs-4">{{title}}</div>
+
+      <div class="milestone-progress">
+        <div id="progress-bar" class="milestone-progress-bar"></div>
+      </div>
+      <div class="milestone-meta fs-5" id="milestone-percentage"></div>
+      <script>
+        (function () {
+          const card = document.querySelector(".milestone-card");
+          const current = parseFloat(card.dataset.current) || 0;
+          const target = parseFloat(card.dataset.target) || 0;
+          let percent = 0;
+
+          if (isNaN(current)) current = 0;
+          if (isNaN(target)) target = 0;
+          if (target > 0 && current >= 0) {
+            percent = Math.min(100, Math.round((current / target) * 100));
+          }
+          let bar = document.getElementById("progress-bar");
+          if (bar) bar.style.width = percent + "%";
+
+          let percentageText = document.getElementById("milestone-percentage");
+          if (percentageText) {
+            percentageText.textContent = percent + "%";
+            percentageText.style.color = "#558b2f";
+            percentageText.style.fontWeight = "bold";
+          }
+        })();
+      </script>
+    </div>
+  </body>
+</html>

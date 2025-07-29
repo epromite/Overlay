@@ -1,0 +1,166 @@
+<html>
+  <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <style>
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      .milestone-progress {
+        height: 18px;
+        border-radius: 8px;
+        background: #dceeff;
+        margin-bottom: 12px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 3px rgba(25, 118, 210, 0.25);
+      }
+
+      .milestone-progress-bar {
+        background: linear-gradient(90deg, #ffec8d, #f9cf5f);
+        height: 100%;
+        border-radius: 8px;
+        transition: width 0.6s ease;
+        box-shadow: 0 0 12px rgba(25, 118, 210, 0.3);
+      }
+
+      .snow {
+        animation: float 4s backwards infinite;
+        overflow: hidden;
+      }
+
+      .snow-slow {
+        animation: float-slow 6s backwards infinite;
+      }
+
+      .snow-fast {
+        animation: float-fast 10s backwards infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float-slow {
+        0% {
+          transform: translateY(0);
+        }
+        25% {
+          transform: translateY(-12px);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+        75% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float-fast {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="m-0 bg-none p-[20px] font-[Karla]">
+    <div
+      class="relative overflow-hidden flex flex-col space-y-2 rounded-xl w-full bg-gradient-to-r from-[#194E83] to-[#83E3FE] text-white px-8 py-6 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+      data-current="{{formattedCurrentAmount}}"
+      data-target="{{formattedTargetAmount}}"
+      id="milestone">
+      <img
+        src="https://i.ibb.co/TxgNP77R/noto-snowflake.png"
+        alt="❄️"
+        class="snow absolute translate-8 -bottom-2 -left-9 w-20" />
+      <!-- Snowflake kiri bawah -->
+      <img
+        src="https://i.ibb.co/TxgNP77R/noto-snowflake.png"
+        alt="❄️"
+        class="snow-slow absolute bottom-0 left-[2.4rem] w-8" />
+      <!-- Snowflake kanan tengah -->
+      <img
+        src="https://i.ibb.co/TxgNP77R/noto-snowflake.png"
+        alt="❄️"
+        class="snow-fast absolute -bottom-4 -right-4 transform w-12" />
+
+      <div class="flex flex-row justify-between">
+        <div class="text-xl">{{title}}</div>
+        <div id="percentage" class="text-xl"></div>
+      </div>
+      <div class="milestone-progress z-10">
+        <div id="progress-bar" class="milestone-progress-bar"></div>
+      </div>
+
+      <!-- IDR Version -->
+      <div class="milestone-amounts">
+        <!-- <div class="milestone-item">
+            <img
+              src="https://i.ibb.co/fdb5FNm0/mysnow.png"
+              alt="mysnow"
+              border="0"
+              class="amount-icon" />
+            <p id="currentAmount" class="mb-0">{{currentAmount}}</p>
+          </div>
+          <span>/</span>
+          <div class="milestone-item">
+            <img
+              src="https://i.ibb.co/fdb5FNm0/mysnow.png"
+              alt="mysnow"
+              border="0"
+              class="amount-icon" />
+            <p id="currentTarget" class="mb-0">{{targetAmount}}</p>
+          </div> -->
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const card = document.getElementById("milestone");
+
+        const extractNumber = (str) => {
+          if (!str) return 0;
+          const match = str.replace(/\./g, "").match(/\d+/);
+          return match ? parseInt(match[0]) : 0;
+        };
+
+        const current = extractNumber(card.dataset.current);
+        const target = extractNumber(card.dataset.target);
+        let percent = 0;
+
+        if (target > 0 && current >= 0) {
+          percent = Math.min(100, Math.round((current / target) * 100));
+        }
+
+        const bar = document.getElementById("progress-bar");
+        if (bar) bar.style.width = percent + "%";
+
+        const percentageProgress = document.getElementById("percentage");
+        if (percentageProgress) {
+          percentageProgress.textContent = percent + "%";
+        }
+      })();
+    </script>
+  </body>
+</html>

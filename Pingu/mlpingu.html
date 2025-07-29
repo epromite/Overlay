@@ -1,0 +1,318 @@
+<html>
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet" />
+
+    <style>
+      body {
+        margin: 0;
+        background: none;
+        font-weight: 800;
+        font-family: "Quicksand", sans-serif;
+        overflow: visible;
+        /* Tambahkan padding untuk memberi ruang pada shadow */
+        padding: 20px;
+      }
+
+      .milestone-card {
+        background: rgb(255, 224, 80);
+        border: 2px solid #ffb300;
+        border-radius: 16px;
+        width: fit-content;
+        padding: 16px 20px;
+        position: relative;
+        overflow: hidden;
+
+        /* Perbaikan box shadow - tambahkan margin untuk memberi ruang */
+        box-shadow: 6px 6px #1370bd;
+        transform: translateZ(0);
+        /* Margin untuk memberi ruang pada shadow */
+        margin: 0 10px 10px 0;
+      }
+
+      .milestone-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+        animation: shimmer 2s infinite reverse;
+      }
+
+      /* Wrapper untuk memastikan shadow tidak terpotong */
+      .milestone-wrapper {
+        display: inline-block;
+        /* Padding untuk memberi ruang pada shadow */
+        padding: 0 10px 10px 0;
+      }
+
+      .falling-star {
+        z-index: 0;
+        position: absolute;
+        color: #fff8e1;
+        font-size: 1.6em;
+        animation: starFall 7s linear infinite;
+        pointer-events: none;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.6);
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+      }
+
+      .falling-star::after {
+        content: "";
+        position: absolute;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.6), transparent);
+        top: 50%;
+        right: -60px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        filter: blur(1px);
+      }
+
+      .milestone-title,
+      .milestone-progress,
+      .milestone-amounts {
+        position: relative;
+        z-index: 1;
+        font-weight: bold;
+        font-family: "Quicksand", sans-serif;
+      }
+
+      .falling-star:nth-child(1) {
+        left: 0%;
+        top: 0%;
+        animation-delay: 0s;
+      }
+      .falling-star:nth-child(2) {
+        left: 5%;
+        top: -10%;
+        animation-delay: 1.5s;
+      }
+      .falling-star:nth-child(3) {
+        left: 15%;
+        top: -5%;
+        animation-delay: 3s;
+      }
+      .falling-star:nth-child(4) {
+        left: 20%;
+        top: -8%;
+        animation-delay: 4.5s;
+      }
+      .falling-star:nth-child(5) {
+        left: 10%;
+        top: -12%;
+        animation-delay: 2s;
+      }
+      .falling-star:nth-child(6) {
+        left: 25%;
+        top: -6%;
+        animation-delay: 6s;
+      }
+      .falling-star:nth-child(7) {
+        left: 30%;
+        top: -10%;
+        animation-delay: 0.5s;
+      }
+
+      @keyframes starFall {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translate(100vw, 100vh) rotate(180deg);
+          opacity: 0;
+        }
+      }
+
+      .milestone-title {
+        font-size: 16px;
+        color: #5d4037;
+        margin-bottom: 16px;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(93, 64, 55, 0.3);
+        line-height: 1.2;
+      }
+
+      .amount-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+        vertical-align: middle;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+      }
+
+      .milestone-progress {
+        height: 24px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #e3f2fd, #bbdefb);
+        margin-bottom: 16px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #90caf9;
+      }
+
+      .milestone-progress-bar {
+        background: linear-gradient(90deg, #42a5f5, #2196f3);
+        height: 100%;
+        border-radius: 12px;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        position: relative;
+      }
+
+      .milestone-progress-bar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .milestone-amounts {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        color: #5d4037;
+        font-weight: 700;
+        text-shadow: 0 1px 2px rgba(93, 64, 55, 0.2);
+      }
+
+      .milestone-amounts span:first-child {
+        color: #2196f3;
+        font-weight: 600; /* light */
+      }
+
+      .milestone-amounts span:nth-child(2) {
+        color: #5d4037;
+        margin: 0 8px;
+        font-weight: 700;
+      }
+
+      .milestone-amounts span:last-child {
+        color: #2196f3;
+        font-weight: bold;
+      }
+
+      .milestone-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="milestone-wrapper">
+      <div
+        class="milestone-card"
+        data-current="{{currentAmount}}"
+        data-target="{{targetAmount}}"
+        style="position: relative; overflow: hidden">
+        <!-- Bintang jatuh -->
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">✨</div>
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">✨</div>
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">✨</div>
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">✨</div>
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">✨</div>
+        <div class="falling-star">⭐</div>
+        <div class="falling-star">✨</div>
+        <div class="falling-star">⭐</div>
+
+        <div class="milestone-title">{{title}}</div>
+        <div class="milestone-progress">
+          <div id="progress-bar" class="milestone-progress-bar"></div>
+        </div>
+        <div class="milestone-amounts">
+          <div class="milestone-item">
+            <img
+              src="https://i.ibb.co/7ttyVrhS/Pingu-Catnip.png"
+              class="amount-icon"
+              alt="Pingu-Catnip"
+              border="0" />
+            <p id="currentAmount" class="mb-0"></p>
+          </div>
+          <span>/</span>
+          <div class="milestone-item">
+            <img
+              src="https://i.ibb.co/7ttyVrhS/Pingu-Catnip.png"
+              class="amount-icon"
+              alt="icon"
+              border="0" />
+            <p id="currentTarget" class="mb-0"></p>
+          </div>
+        </div>
+
+        <script>
+          (function () {
+            const card = document.querySelector(".milestone-card");
+            const current = parseFloat(card.dataset.current) || 0;
+            const target = parseFloat(card.dataset.target) || 0;
+            let percent = 0;
+
+            if (isNaN(current)) current = 0;
+            if (isNaN(target)) target = 0;
+            if (target > 0 && current >= 0) {
+              percent = Math.min(100, Math.round((current / target) * 100));
+            }
+            let bar = document.getElementById("progress-bar");
+            if (bar) bar.style.width = percent + "%";
+
+            const ca = document.getElementById("currentAmount");
+            const ct = document.getElementById("currentTarget");
+
+            const formatIDR = (num) => {
+              return new Intl.NumberFormat("id-ID", {
+                maximumFractionDigits: 0,
+                useGrouping: true
+              }).format(num);
+            };
+
+            ca.innerText = formatIDR(current);
+            ct.innerText = formatIDR(target);
+          })();
+        </script>
+      </div>
+    </div>
+  </body>
+</html>

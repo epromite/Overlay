@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Leaderboard</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+            <style>
+      .snow {
+        animation: float 4s backwards infinite;
+      }
+
+      .snow-slow {
+        animation: float-slow 6s backwards infinite;
+      }
+
+      .snow-fast {
+        animation: float-fast 10s backwards infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float-slow {
+        0% {
+          transform: translateY(0);
+        }
+        25% {
+          transform: translateY(-12px);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+        75% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float-fast {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+    </head>
+    <body class="m-0 bg-none p-5 font-[Karla]">
+        <div class="relative overflow-hidden rounded-xl w-full bg-gradient-to-r from-[#194E83] to-[#83E3FE] text-white px-8 py-6 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                  <img
+          src="https://i.ibb.co/TxgNP77R/noto-snowflake.png"
+          alt=":snowflake:"
+          class="snow absolute translate-8 -top-4 -left-4 w-20" />
+        <!-- Snowflake kiri bawah -->
+        <img
+          src="https://i.ibb.co/TxgNP77R/noto-snowflake.png"
+          alt=":snowflake:"
+          class="snow-slow absolute top-6 left-[3.6rem] w-10" />
+
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold">{{title}}</h1>
+            </div>
+            <div id="ranking-list"></div>
+            </div>
+        </div>
+<script>
+    const rankings = JSON.parse('{{rankings}}');
+    const list = rankings.map((r, index) => 
+        `<div class="flex justify-between items-center bg-white/10 rounded-lg px-4 py-3 backdrop-blur-sm mb-3">
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold">${index + 1}.</span>
+                <span class="font-bold">${r.name}</span>
+            </div>
+            <div class="text-white font-bold text-lg">
+                ${r.formattedAmount.replace(/^IDR/, '<span class="text-[#F9CF5F]">IDR</span>')}
+            </div>
+        </div>`
+    ).join('');
+    document.getElementById('ranking-list').innerHTML = list;
+</script>
+
+    </body>
+</html>
