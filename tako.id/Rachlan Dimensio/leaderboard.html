@@ -1,0 +1,125 @@
+<html>
+  <head>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap"
+      rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Funnel Display", sans-serif;
+        background-color: transparent;
+        overflow: visible;
+      }
+      .leaderboard-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        width: 100%;
+        max-width: 900px;
+        margin: 20px auto;
+      }
+      .leaderboard-card {
+        background: linear-gradient(145deg, #fdd6f0, #f4bff9, #eab8fc, #d6a5f8);
+        border-radius: 16px;
+        box-shadow: 8px 8px 0 #b36ae2;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 15px;
+        width: 100%;
+        transition: transform 0.3s ease;
+        animation: infinite;
+      }
+      .leaderboard-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent 50%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+        animation: shimmer 2s infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+      .leaderboard-title {
+        font-size: 2.5em;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        color: white;
+        margin-bottom: 15px;
+        text-align: center;
+        text-shadow: 0 10px 10px rgba(255, 0, 255, 0.3);
+      }
+      .leaderboard-item-row {
+        font-size: 1.4em;
+        font-weight: normal;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 2px solid #b36ae2;
+        text-shadow: 0 2px 4px rgba(255, 0, 255, 0.3);
+        margin-bottom: 20px;
+      }
+      .leaderboard-item-row:last-child {
+        border-bottom: none;
+      }
+      .rank {
+        font-weight: bold;
+        color: #ff66cc;
+        margin-right: 15px;
+      }
+      .player-name {
+        color: white;
+        flex-grow: 1;
+        text-align: left;
+      }
+      .score {
+        font-weight: bold;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="leaderboard-wrapper">
+      <div class="leaderboard-card">
+        <div class="leaderboard-title">{{title}}</div>
+        <div id="ranking-list"></div>
+      </div>
+    </div>
+    <script>
+      const rankings = JSON.parse(`{{rankings}}`);
+      const list = rankings
+        .map(
+          (r, index) =>
+            `<div class="leaderboard-item-row row align-items-center">
+              <div class="col-2 rank">${index + 1}.</div>
+              <div class="col player-name">${r.name}</div>
+              <div class="col-4 score">
+                ${r.formattedAmount}
+              </div>
+            </div>`
+        )
+        .join("");
+      document.getElementById("ranking-list").innerHTML = list;
+    </script>
+  </body>
+</html>

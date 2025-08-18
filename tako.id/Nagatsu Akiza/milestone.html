@@ -87,8 +87,6 @@
   <body class="m-0 bg-none p-[20px] font-[Karla]">
     <div
       class="relative overflow-hidden flex flex-col space-y-2 rounded-xl w-full bg-gradient-to-r from-[#194E83] to-[#83E3FE] text-white px-8 py-6 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-      data-current="{{formattedCurrentAmount}}"
-      data-target="{{formattedTargetAmount}}"
       id="milestone">
       <img
         src="https://i.ibb.co/TxgNP77R/noto-snowflake.png"
@@ -106,50 +104,23 @@
         class="snow-fast absolute -bottom-4 -right-4 transform w-12" />
 
       <div class="flex flex-row justify-between">
-        <div class="text-xl">{{title}}</div>
-        <div id="percentage" class="text-xl"></div>
+        <div class="text-[20px]">{{title}}</div>
+        <div id="percentage" class="text-[20px]"></div>
       </div>
       <div class="milestone-progress z-10">
         <div id="progress-bar" class="milestone-progress-bar"></div>
-      </div>
-
-      <!-- IDR Version -->
-      <div class="milestone-amounts">
-        <!-- <div class="milestone-item">
-            <img
-              src="https://i.ibb.co/fdb5FNm0/mysnow.png"
-              alt="mysnow"
-              border="0"
-              class="amount-icon" />
-            <p id="currentAmount" class="mb-0">{{currentAmount}}</p>
-          </div>
-          <span>/</span>
-          <div class="milestone-item">
-            <img
-              src="https://i.ibb.co/fdb5FNm0/mysnow.png"
-              alt="mysnow"
-              border="0"
-              class="amount-icon" />
-            <p id="currentTarget" class="mb-0">{{targetAmount}}</p>
-          </div> -->
       </div>
     </div>
 
     <script>
       (function () {
-        const card = document.getElementById("milestone");
-
-        const extractNumber = (str) => {
-          if (!str) return 0;
-          const match = str.replace(/\./g, "").match(/\d+/);
-          return match ? parseInt(match[0]) : 0;
-        };
-
-        const current = extractNumber(card.dataset.current);
-        const target = extractNumber(card.dataset.target);
+        const current = `{{currentAmount}}`;
+        const target = `{{targetAmount}}`;
         let percent = 0;
 
-        if (target > 0 && current >= 0) {
+        if (target <= 0 || current <= 0) {
+          percent = 0;
+        } else {
           percent = Math.min(100, Math.round((current / target) * 100));
         }
 

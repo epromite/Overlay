@@ -67,7 +67,7 @@
       }
     </style>
   </head>
-  <body class="m-0 bg-none p-[20px] font-[Karla]">
+  <body class="m-0 bg-none font-[Karla]">
     <div
       class="relative overflow-hidden flex flex-col space-y-2 rounded-xl w-full bg-gradient-to-r from-[#194E83] to-[#83E3FE] text-white px-8 py-6 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
       <!-- Snowflake kiri atas -->
@@ -88,21 +88,18 @@
 
       <!-- Content utama -->
       <div class="text-center space-y-2">
-        <div class="text-[2rem] font-bold">
+        <div class="text-[28px] font-bold">
           <span class="text-[#F9CF5F]">IDR</span>
-          <span id="amount" data-rawAmount="{{amount}}"></span>
+          <span id="amount"></span>
           <span class="font-light text-white">dari</span>
           <span class="font-semibold">{{gifterName}}</span>
         </div>
-        <div class="text-[2.2rem] font-medium break-words whitespace-pre-wrap">{{message}}</div>
+        <div class="text-[30px] font-medium break-words whitespace-pre-wrap">{{message}}</div>
       </div>
     </div>
 
     <script>
       (function () {
-        let amountE = document.getElementById("amount");
-        let rawAmount = amountE.getAttribute("data-rawAmount");
-
         const formatIDR = (num) => {
           return new Intl.NumberFormat("id-ID", {
             maximumFractionDigits: 0,
@@ -110,7 +107,8 @@
           }).format(num);
         };
 
-        amountE.innerText = formatIDR(rawAmount);
+        const amountE = document.getElementById("amount");
+        amountE.innerText = formatIDR(`{{amount}}`);
       })();
     </script>
   </body>
